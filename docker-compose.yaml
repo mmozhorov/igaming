@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  api:
+    image: nestjs-app
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB=mongodb://mongo:27017/mydatabase
+      - JWT_SECRET=super_secret_phrase
+    depends_on:
+      - mongo
+    networks:
+      - web
+  admin:
+    image: nestjs-admin
+    ports:
+      - "3002:3002"
+    environment:
+      - MONGODB=mongodb://mongo:27017/mydatabase
+      - JWT_SECRET=super_secret_phrase
+    depends_on:
+      - mongo
+    networks:
+      - web
+  mongo:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - web
+  traefik:
+    image: traefik:v2.5
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
