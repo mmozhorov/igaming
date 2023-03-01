@@ -1,0 +1,10 @@
+# dependencies
+node_modules/
+dist/
+
+# IDE
+/.idea
+/.awcache
+/.vscode
+/.devcontainer
+*.code-workspace

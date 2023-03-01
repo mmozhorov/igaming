@@ -1,24 +1,24 @@
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Body, Controller, Post } from '@nestjs/common';
 import { InternalError, PublicError } from "../../utils/typed-errors";
-import { UserRegistrationService } from './user-registration.service';
-import * as dto from "./user-registration.dto";
+import { UserAuthorizationService } from './user-authorization.service';
+import * as dto from "./user-authorization.dto";
 
 @Controller('/api/user-authorization')
 @ApiTags('user-authorization')
-export class UserRegistrationController {
+export class UserAuthorizationController {
   constructor(
-      private readonly userRegistrationService: UserRegistrationService
+      private readonly userAuthorizationService: UserAuthorizationService
   ) {}
-  @Post('/user/account')
-  @ApiOperation({ description: 'Create Account' })
+  @Post('/user/login')
+  @ApiOperation({ description: 'Login and return token' })
   @ApiResponse({
-    type: dto.CreateUserAccountResponse
+    type: dto.LoginUserResponse
   })
   async createAccount(
-    @Body() body: dto.CreateUserAccountRequest
-  ): Promise<dto.CreateUserAccountResponse | PublicError> {
-    const data = await this.userRegistrationService.createAccount(body);
+    @Body() body: dto.LoginUserRequest
+  ): Promise<dto.LoginUserResponse | PublicError> {
+    const data = await this.userAuthorizationService.authenticateUser(body);
     if (data instanceof PublicError) {
       return new PublicError(data.message, data.statusCode, data.type);
     }
