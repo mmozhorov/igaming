@@ -4,13 +4,13 @@ import { InternalError, PublicError } from "../../utils/typed-errors";
 import { UserRegistrationService } from './user-registration.service';
 import * as dto from "./user-registration.dto";
 
-@Controller('/api/user-authorization')
-@ApiTags('user-authorization')
+@Controller('/api/v1/signup')
+@ApiTags('user-registration')
 export class UserRegistrationController {
   constructor(
       private readonly userRegistrationService: UserRegistrationService
   ) {}
-  @Post('/user/account')
+  @Post('/')
   @ApiOperation({ description: 'Create Account' })
   @ApiResponse({
     type: dto.CreateUserAccountResponse

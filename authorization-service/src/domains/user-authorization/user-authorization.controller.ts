@@ -4,13 +4,13 @@ import { InternalError, PublicError } from "../../utils/typed-errors";
 import { UserAuthorizationService } from './user-authorization.service';
 import * as dto from "./user-authorization.dto";
 
-@Controller('/api/user-authorization')
+@Controller('/api/v1/auth')
 @ApiTags('user-authorization')
 export class UserAuthorizationController {
   constructor(
       private readonly userAuthorizationService: UserAuthorizationService
   ) {}
-  @Post('/user/login')
+  @Post('/')
   @ApiOperation({ description: 'Login and return token' })
   @ApiResponse({
     type: dto.LoginUserResponse

@@ -1,23 +1,37 @@
 version: "3.8"
 
 services:
-  api:
-    image: nestjs-app
+  authorization-service:
+    build:
+      context: ./authorization-service
     ports:
       - "3001:3001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=PathPrefix(`/api/v1/auth`)"
+      - "traefik.http.middlewares.api-strip.prefixes=/api/v1/auth"
+      - "traefik.http.routers.api.service=authorization"
+      - "traefik.http.services.api.loadbalancer.server.port=3001"
     environment:
-      - MONGODB=mongodb://mongo:27017/mydatabase
+      - MONGODB=mongodb://mongo:27017/gaming
       - JWT_SECRET=super_secret_phrase
     depends_on:
       - mongo
     networks:
       - web
-  admin:
-    image: nestjs-admin
+  registration-service:
+    build:
+      context: ./registration-service
     ports:
       - "3002:3002"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.admin.rule=PathPrefix(`/api/v1/signup`)"
+      - "traefik.http.middlewares.admin-strip.prefixes=/api/v1/signup"
+      - "traefik.http.routers.admin.service=registration"
+      - "traefik.http.services.admin.loadbalancer.server.port=3002"
     environment:
-      - MONGODB=mongodb://mongo:27017/mydatabase
+      - MONGODB=mongodb://mongo:27017/gaming
       - JWT_SECRET=super_secret_phrase
     depends_on:
       - mongo
