@@ -15,7 +15,7 @@ export class UserAuthorizationController {
   @ApiResponse({
     type: dto.LoginUserResponse
   })
-  async createAccount(
+  async loginUser(
     @Body() body: dto.LoginUserRequest
   ): Promise<dto.LoginUserResponse | PublicError> {
     const data = await this.userAuthorizationService.authenticateUser(body);
