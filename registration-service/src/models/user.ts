@@ -1,4 +1,4 @@
-import { Document, Schema, Model, model, Error } from 'mongoose'
+import { Document, Schema, Model, model, Error } from 'mongoose';
 const bcrypt = require('bcryptjs');
 
 export interface IUser extends Document {

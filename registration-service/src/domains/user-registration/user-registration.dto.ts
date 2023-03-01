@@ -23,3 +23,6 @@ export class CreateUserAccountRequest extends UserAccount {}
 export class CreateUserAccountResponse {
   public data: string;
 }
+export class GetUserInfoResponse {
+  public data: UserAccount;
+}

@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import passport from "passport";
 import "../../utils/passportHandler";
 import { JWT_SECRET } from "../../utils/secrets";
-import { IUser } from "../../schemas/user";
+import { IUser } from "../../models/user";
 import {
   PublicError,
   InternalError,

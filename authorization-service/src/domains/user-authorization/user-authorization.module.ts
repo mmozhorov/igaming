@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from "@nestjs/mongoose";
 import { UserAuthorizationController } from './user-authorization.controller';
 import { UserAuthorizationService } from './user-authorization.service';
-import {User, userSchema} from "../../schemas/user";
+import {User, userSchema} from "../../models/user";
 
 @Module({
   imports: [
